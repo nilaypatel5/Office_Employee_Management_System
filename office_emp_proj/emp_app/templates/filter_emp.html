@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}Filter Employees{% endblock %}
+
+{% block content %}
+<h1>Filter Employee Details</h1>
+<hr>
+<form action="{% url 'filter_emp' %}" method="post">
+    {% csrf_token %}
+    
+    <!-- First Name -->
+    <label for="first_name">Employee First Name</label><br>
+    <input type="text" id="first_name" name="first_name" value="{{ first_name }}"><br>
+    
+    <!-- Last Name -->
+    <label for="last_name">Employee Last Name</label><br>
+    <input type="text" id="last_name" name="last_name" value="{{ last_name }}"><br>
+    
+    <!-- Department -->
+    <label for="dept">Department</label><br>
+    <select id="dept" name="dept">
+        <option value="">Select Department</option>
+        {% for department in departments %}
+            <option value="{{ department.id }}" {% if department.id|stringformat:"s" == dept %}selected{% endif %}>
+                {{ department.name }} ({{ department.location }})
+            </option>
+        {% endfor %}
+    </select><br>
+    
+    <!-- Role -->
+    <label for="role">Role</label><br>
+    <select id="role" name="role">
+        <option value="">Select Role</option>
+        {% for role in roles %}
+            <option value="{{ role.id }}" {% if role.id|stringformat:"s" == role %}selected{% endif %}>
+                {{ role.name }}
+            </option>
+        {% endfor %}
+    </select><br>
+    
+    <!-- Hire Date From -->
+    <label for="hire_date_from">Hire Date From</label><br>
+    <input type="date" id="hire_date_from" name="hire_date_from" value="{{ hire_date_from }}"><br>
+    
+    <!-- Hire Date To -->
+    <label for="hire_date_to">Hire Date To</label><br>
+    <input type="date" id="hire_date_to" name="hire_date_to" value="{{ hire_date_to }}"><br>
+    
+    <hr>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% if employees %}
+    <h2>Employee Results</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Department</th>
+                <th>Role</th>
+                <th>Hire Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for employee in employees %}
+                <tr>
+                    <td>{{ employee.first_name }}</td>
+                    <td>{{ employee.last_name }}</td>
+                    <td>{{ employee.department.name }}</td>
+                    <td>{{ employee.role.name }}</td>
+                    <td>{{ employee.hire_date }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5">No employees found</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+{% endblock %}

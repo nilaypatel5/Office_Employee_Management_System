@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}Update Employee{% endblock %}
+
+{% block content %}
+<style>
+    .btn-small {
+        padding: 5px 10px;
+        font-size: 12px;
+        border-radius: 4px;
+    }
+
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+        position: relative;
+        font-size: 16px;
+    }
+
+    .alert-error {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: transparent;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: white;
+    }
+</style>
+
+<h1>Update Employee</h1>
+<hr>
+
+<!-- Alert Messages -->
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+            <button class="close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<form action="{% url 'update_emp' emp.id %}" method="post">
+    {% csrf_token %}
+    <label for="first_name">First Name</label><br>
+    <input type="text" id="first_name" name="first_name" value="{{ emp.first_name }}"><br>
+    <label for="last_name">Last Name</label><br>
+    <input type="text" id="last_name" name="last_name" value="{{ emp.last_name }}"><br>
+    <label for="salary">Salary</label><br>
+    <input type="number" id="salary" name="salary" value="{{ emp.salary }}"><br>
+    <label for="dept">Department</label><br>
+    <select id="dept" name="dept">
+        {% for department in departments %}
+            <option value="{{ department.id }}" {% if department.id == emp.dept.id %}selected{% endif %}>
+                {{ department.name }} ({{ department.location }})
+            </option>
+        {% endfor %}
+    </select><br>
+    <label for="role">Role</label><br>
+    <select id="role" name="role">
+        {% for role in roles %}
+            <option value="{{ role.id }}" {% if role.id == emp.role.id %}selected{% endif %}>
+                {{ role.name }}
+            </option>
+        {% endfor %}
+    </select><br>
+    <label for="bonus">Bonus</label><br>
+    <input type="number" id="bonus" name="bonus" value="{{ emp.bonus }}"><br>
+    <label for="phone_number">Phone Number</label><br>
+    <input type="text" id="phone_number" name="phone_number" value="{{ phone_number }}"><br>
+    <label for="hire_date">Hire Date</label><br>
+    <input type="date" id="hire_date" name="hire_date" value="{{ hire_date }}"><br>
+    <hr>
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>
+{% endblock %}
