@@ -52,28 +52,28 @@
 
 {% if employees %}
     <h2>Employee Results</h2>
-    <table>
+    <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
         <thead>
-            <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Department</th>
-                <th>Role</th>
-                <th>Hire Date</th>
+            <tr style="background-color: #f2f2f2;">
+                <th style="border: 1px solid #ddd; padding: 8px;">First Name</th>
+                <th style="border: 1px solid #ddd; padding: 8px;">Last Name</th>
+                <th style="border: 1px solid #ddd; padding: 8px;">Department</th>
+                <th style="border: 1px solid #ddd; padding: 8px;">Role</th>
+                <th style="border: 1px solid #ddd; padding: 8px;">Hire Date</th>
             </tr>
         </thead>
         <tbody>
             {% for employee in employees %}
                 <tr>
-                    <td>{{ employee.first_name }}</td>
-                    <td>{{ employee.last_name }}</td>
-                    <td>{{ employee.department.name }}</td>
-                    <td>{{ employee.role.name }}</td>
-                    <td>{{ employee.hire_date }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ employee.first_name }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ employee.last_name }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ employee.dept.name }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ employee.role.name }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ employee.hire_date }}</td>
                 </tr>
             {% empty %}
                 <tr>
-                    <td colspan="5">No employees found</td>
+                    <td colspan="5" style="border: 1px solid #ddd; padding: 8px; text-align: center;">No employees found</td>
                 </tr>
             {% endfor %}
         </tbody>

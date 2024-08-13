@@ -139,7 +139,7 @@ def filter_emp(request):
         if last_name:
             employees = employees.filter(last_name__icontains=last_name)
         if dept:
-            employees = employees.filter(department_id=dept)
+            employees = employees.filter(dept_id=dept)  # Corrected field name
         if role:
             employees = employees.filter(role_id=role)
         if hire_date_from:
@@ -175,6 +175,7 @@ def filter_emp(request):
     }
     
     return render(request, 'filter_emp.html', context)
+
 
 
 class EmployeeForm(ModelForm):
